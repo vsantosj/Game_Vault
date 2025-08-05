@@ -1,7 +1,7 @@
 import { Category } from './../entities/category.entity';
 import { HttpException, HttpStatus, Injectable,} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, Repository } from "typeorm";
+import { DeleteResult, ILike, Repository } from "typeorm";
 
 
 @Injectable()
@@ -14,6 +14,7 @@ export class CategoryService {
     ) { }
 
 
+    //CRUD simples
     async findAll(): Promise<Category[]> {
         return await this.categoryRepository.find();
     }
@@ -45,5 +46,20 @@ export class CategoryService {
         return await this.categoryRepository.delete(id);
     }
 
+    //outros métodos
 
+    async findByName(name: string):Promise<Category[]>{
+        return await this.categoryRepository.find({
+            where:{
+                name: ILike(`%${name}`)
+            }
+        });
+    }
+
+    async findByAllActive(): Promise<Category[]>{
+        return this.categoryRepository.find({
+            where:
+            {isActive: true}
+        });
+    }
 }
