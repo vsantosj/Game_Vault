@@ -11,18 +11,18 @@ export class CategoryController {
     @Get()
     @HttpCode(HttpStatus.OK)
     findAll(): Promise<Category[]> {
-        return this.categoryService.getAllCategories();
+        return this.categoryService.findAll();
     }
 
     @Get('/:id')
     @HttpCode(HttpStatus.OK)
     findById(@Param('id', ParseIntPipe) id: number): Promise<Category>{
-        return this.categoryService.getCategoryById(id);
+        return this.categoryService.findById(id);
     }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
     create(@Body() category: Category): Promise<Category> {
-        return this.categoryService.createCategory(category);
+        return this.categoryService.create(category);
     }
 }

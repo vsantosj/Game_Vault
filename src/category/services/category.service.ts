@@ -14,11 +14,11 @@ export class CategoryService {
     ) { }
 
 
-    async getAllCategories(): Promise<Category[]> {
+    async findAll(): Promise<Category[]> {
         return await this.categoryRepository.find();
     }
 
-    async getCategoryById(id: number): Promise<Category>{
+    async findById(id: number): Promise<Category>{
         const category = await this.categoryRepository.findOne({
             where:{
                 id
@@ -30,7 +30,7 @@ export class CategoryService {
         return category;
     }
 
-    async createCategory(category: Category): Promise<Category>{
+    async create(category: Category): Promise<Category>{
         return await this.categoryRepository.save(category);
     }
 
