@@ -1,6 +1,7 @@
+import { DeleteResult } from 'typeorm';
 import { Category } from '../entities/category.entity';
 import { CategoryService } from './../services/category.service';
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
 
 
 @Controller('/categorias')
@@ -25,4 +26,16 @@ export class CategoryController {
     create(@Body() category: Category): Promise<Category> {
         return this.categoryService.create(category);
     }
+
+    @Put('/:id')
+    @HttpCode(HttpStatus.OK)
+    update(@Param('id', ParseIntPipe) id: number, @Body() category:Category): Promise<Category>{
+        return this.categoryService.update(category);
+    }
+    
+    @Delete('/:id')
+    delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult>{
+        return this.categoryService.delete(id);
+    }
+
 }

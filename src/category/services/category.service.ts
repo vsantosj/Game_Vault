@@ -1,7 +1,7 @@
 import { Category } from './../entities/category.entity';
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable,} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { DeleteResult, Repository } from "typeorm";
 
 
 @Injectable()
@@ -18,20 +18,31 @@ export class CategoryService {
         return await this.categoryRepository.find();
     }
 
-    async findById(id: number): Promise<Category>{
+    async findById(id: number): Promise<Category> {
         const category = await this.categoryRepository.findOne({
-            where:{
+            where: {
                 id
             }
         });
-        if(!category)
+        if (!category)
             throw new HttpException(`Categoria com id ${id} não encontrada!`, HttpStatus.NOT_FOUND);
 
         return category;
     }
 
-    async create(category: Category): Promise<Category>{
+    async create(category: Category): Promise<Category> {
         return await this.categoryRepository.save(category);
+    }
+
+    async update(category: Category): Promise<Category> {
+        await this.findById(category.id);
+        return await this.categoryRepository.save(category);
+    }
+
+    async delete(id: number): Promise<DeleteResult> {
+        await this.findById(id);
+
+        return await this.categoryRepository.delete(id);
     }
 
 
