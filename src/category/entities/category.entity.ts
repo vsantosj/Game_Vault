@@ -1,5 +1,5 @@
-import { IsNotEmpty } from "class-validator";
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Game } from "../../game/entities/game.entity";
 
 @Entity({name: "tb_category"})
 export class Category{
@@ -21,4 +21,8 @@ export class Category{
 
     @UpdateDateColumn()
     updatedAt: Date ;
+
+    @OneToMany(() => Game, (game) => game.category)
+    game: Game[];
+    
 }

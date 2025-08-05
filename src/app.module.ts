@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from './category/category.module';
 import { Category } from './category/entities/category.entity';
+import { Game } from './game/entities/game.entity';
+import { GameModule } from './game/game.module';
 
 @Module({
   imports: [
@@ -16,11 +18,12 @@ import { Category } from './category/entities/category.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Category],
+      entities: [Game, Category],
       synchronize: process.env.NODE_ENV === 'development',
       logging: process.env.NODE_ENV === 'development',
     }),
-    CategoryModule,
+    
+    GameModule, CategoryModule,
   ],
   controllers: [],
   providers: [],
